@@ -2,10 +2,66 @@ import os
 import numpy as np
 
 
+def load_data(file_path):
+    # Load the dataset file into a numpy array.
+    data = np.loadtxt(file_path)
+    return data
+
+
+def forward_selection(data):
+    print("\nBeginning Forward Selection search.\n")
+
+    # TODO:
+    # 1. Start with empty feature set
+    # 2. Iteratively add features
+    # 3. Evaluate accuracy with nearest neighbor
+    # 4. Track best feature subset
+
+    # find which class is the majority in the data
+    baseline_acc = "number of instance in majority class" / data.shape[0]
+
+    feature_subset = {}
+
+    for (i in (ndata.shape[1] - 1 )){
+        current_set = feature_subset
+        if (i in feature_subset): 
+            continue
+        else:
+            current_set.append(i)
+            acc_list.append(calc_accuracy(data, feature_subset))
+            feature_subset.drop[-1]
+    }
+
+    pass
+
+
+def backward_elimination(data):
+    print("\nBeginning Backward Elimination search.\n")
+
+    # TODO:
+    # 1. Start with all features
+    # 2. Iteratively remove features
+    # 3. Evaluate accuracy with nearest neighbor
+    # 4. Track best feature subset
+
+    pass
+
+
+def calc_accuracy(data, feature_subset):
+    # Evaluate accuracy using nearest neighbor with leave-one-out validation.
+
+    # TODO:
+    # Implement nearest neighbor classification
+    # using only the selected feature subset.
+
+    
+
+    return accuracy
+
+
+
 def main():
     print("Welcome to Lydia's Feature Selection Algorithm.\n")
-
-    # Ask user dataset size
     dataset_size = input("Do you want to use the SMALL or LARGE dataset? (type 'small' or 'large'): ").strip().lower()
 
     if dataset_size == "small":
@@ -48,44 +104,6 @@ def main():
         print("Invalid choice. Exiting.")
 
 
-def load_data(file_path):
-    # Load the dataset file into a numpy array.
-    data = np.loadtxt(file_path)
-    return data
-
-
-def forward_selection(data):
-    print("\nBeginning Forward Selection search.\n")
-
-    # TODO:
-    # 1. Start with empty feature set
-    # 2. Iteratively add features
-    # 3. Evaluate accuracy with nearest neighbor
-    # 4. Track best feature subset
-
-    pass
-
-
-def backward_elimination(data):
-    print("\nBeginning Backward Elimination search.\n")
-
-    # TODO:
-    # 1. Start with all features
-    # 2. Iteratively remove features
-    # 3. Evaluate accuracy with nearest neighbor
-    # 4. Track best feature subset
-
-    pass
-
-
-def nearest_neighbor_accuracy(data, feature_subset):
-    # Evaluate accuracy using nearest neighbor with leave-one-out validation.
-
-    # TODO:
-    # Implement nearest neighbor classification
-    # using only the selected feature subset.
-
-    pass
 
 
 if __name__ == "__main__":
