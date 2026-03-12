@@ -2,12 +2,7 @@ import os
 import numpy as np
 
 def forward_selection(data):
-    print("\nBeginning Forward Selection search.\n")
-
-    # TODO:
-    # 2. Iteratively add features
-    # 3. Evaluate accuracy with nearest neighbor
-    # 4. Track best feature subset
+    print("\n==============================================\n\nBeginning Forward Selection search.\n")
 
     # find which class is the majority in the data
     unique, counts = np.unique(data[:,0], return_counts=True)
@@ -28,23 +23,21 @@ def forward_selection(data):
                 curr_set = feature_subset.copy()
                 curr_set.append(feature)
                 temp_acc = calc_accuracy(data, curr_set)
-                print(f"    Feature {curr_set} accuracy is {temp_acc:.4f}")
+                print(f"    Using feature {curr_set} accuracy is {temp_acc:.4f}")
 
-                if (temp_acc >= best_accuracy_this_level):
+                if temp_acc >= best_accuracy_this_level:
                     best_feature_this_level = feature
                     best_accuracy_this_level = temp_acc
                 
         
         feature_subset.append(best_feature_this_level)
-        print(f"Using feature set {feature_subset} was best, accuracy is {best_accuracy_this_level:.4f}\n")
+        print(f"Feature set {feature_subset} was best, accuracy is {best_accuracy_this_level:.4f}\n")
         if best_accuracy_this_level > best_acc:
             best_acc = best_accuracy_this_level
             best_subset = feature_subset.copy()
 
     print("\n\nFinished search!!")
-    print(f"The best feature subset is {best_subset}, which has an accuracy of {best_acc_overall:.4f}")
-    
-
+    print(f"The best feature subset is {best_subset}, which has an accuracy of {best_acc:.4f}")
     pass
 
 
@@ -65,63 +58,57 @@ def calc_accuracy(data, feature_subset):
     
     # 1. create a copy of data to only contain the features/columns from the feature_subset
     data_copy = data[:, feature_subset]
-    nearest_dist = 0
-    nearest_label = 0
     correct = 0
     # 2. iterate thru all the instances
-    for (instance in range(data_copy.shape[0])):
-
+    for instance in range(data_copy.shape[0]):
+        nearest_dist = 999999999999999
+        nearest_label = None
         # 3. for each instance, grab the instance's label
         ins_label = data[instance, 0]   # first column is class label
 
-        # 4. perform nearest neighbor to the rest of the instances (iterate thru the instances again)
-        for (k in range(data_copy.shape[0])):   
-            if (k != instance): # (k \= i) to skip the instance itself
+        # 4. perform nearest neighbor to the rest of the instances
+        for k in range(data_copy.shape[0]):
+            if k != instance: # (k \= i) to skip the instance itself
                 # calculate distance from instance to rest of the instances, k
                 dist = np.sqrt(np.sum((data_copy[instance] - data_copy[k]) ** 2))
-                
                 # 5. keep track of the nearest neighbor and its label
-                if (dist < nearest_dist):
+                if dist < nearest_dist:
                     nearest_dist = dist
                     nearest_label = data[k, 0]   # first column is class label
 
         # 6. compare the nearest neighbor label to the actual label
-        if (nearest_label == ins_label):
+        if nearest_label == ins_label:
             correct += 1
    
     # 7. accuracy = correct / total instances
-    return correct / data_copy.shape[0]
-
-
-# find the smallest distance and take its label
-
-# sum( target - neighbor) while the neighbor is just the data itself with only the takes in feature subset 
-"""
-go thru instaces and then cover 
-
-"""
-    # leave one out 
-
-    return accuracy
+    accuracy = correct / data_copy.shape[0]
+    return (correct / data_copy.shape[0])
 
 
 # 116 76
 # 96-98%
 
 def main():
-    print("Welcome to Lydia's Feature Selection Algorithm.\n")
-    dataset_size = input("Do you want to use the SMALL or LARGE dataset? (type 'small' or 'large'): ").strip().lower()
-    # Ask user for filename
-    filename = input("Type in the name of the file to test: ").strip()
-
-    if dataset_size == "small":
+    print("\n==============================================\nWelcome to Lydia's Feature Selection Algorithm.\n")
+    dataset_size = input("Do you want to use the 1) SMALL or 2) LARGE dataset 3) Sanity Check?  (please type 1 or 2 or 3):\n\n")
+    if dataset_size == "1":
         folder_path = "./Small_data/"
-    elif dataset_size == "large":
+        prefix = "CS170_Small_DataSet__"
+    elif dataset_size == "2":
         folder_path = "./Large_data/"
+        prefix = "CS170_Large_DataSet__"
+    elif dataset_size == "3":
+        folder_path = "./SanityCheck/"
+        prefix = "SanityCheck_DataSet__"
     else:
         print("Invalid option. Exiting program.")
         return
+        
+    # Ask user for filename
+    dataset_number = input("\nPlease enter the dataset number: \n(My assigned testing datasets are SMALL 116 && LARGE 76)\n\n").strip()    
+    filename = f"{prefix}{dataset_number}.txt"
     file_path = os.path.join(folder_path, filename)
+
 
     if not os.path.exists(file_path):
         print("File not found. Please check the file name and try again.")
@@ -133,14 +120,15 @@ def main():
     num_instances = data.shape[0]
     num_features = data.shape[1] - 1   # first column is class label
 
+    print(f"\nGreat choice! We will be working on {filename}")
     print(f"\nThis dataset has {num_features} features (not including the class attribute), with {num_instances} instances.\n")
 
     # Ask user which algorithm
-    print("Type the number of the algorithm you want to run.")
+    print("Which algorithm would you like to run? (Please type 1 or 2)")
     print("1) Forward Selection")
     print("2) Backward Elimination")
 
-    choice = input("Enter your choice: ").strip()
+    choice = input("\nEnter your choice: ").strip()
 
     if choice == "1":
         forward_selection(data)
