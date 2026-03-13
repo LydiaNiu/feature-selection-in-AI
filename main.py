@@ -1,18 +1,19 @@
 import os
 import numpy as np
 
+
 def forward_selection(data):
     print("\n==============================================\n\nBeginning Forward Selection search.\n")
 
     # find which class is the majority in the data
-    unique, counts = np.unique(data[:,0], return_counts=True)
+    counts = np.unique(data[:,0], return_counts=True)
     majority_count = counts.max()
     baseline_acc = majority_count / len(data[:,0])
 
     feature_subset = []
     best_acc = baseline_acc
     best_subset = []
-
+    print(f"Running nearest neighbor with all {data.shape[1]-1} features, using “leaving-one-out” evaluation, the baseline accuracy is {baseline_acc * 100:.2f}%\n\n")
     # for loop starts at 1 bc column 0 is class label
     for level in range(1, data.shape[1]):
         best_feature_this_level = None
@@ -23,7 +24,7 @@ def forward_selection(data):
                 curr_set = feature_subset.copy()
                 curr_set.append(feature)
                 temp_acc = calc_accuracy(data, curr_set)
-                print(f"    Using feature {curr_set} accuracy is {temp_acc:.4f}")
+                print(f"    Using feature {curr_set} accuracy is {temp_acc * 100:.1f}%")
 
                 if temp_acc >= best_accuracy_this_level:
                     best_feature_this_level = feature
@@ -31,24 +32,55 @@ def forward_selection(data):
                 
         
         feature_subset.append(best_feature_this_level)
-        print(f"Feature set {feature_subset} was best, accuracy is {best_accuracy_this_level:.4f}\n")
+        print(f"Feature set {feature_subset} was best, accuracy is {best_accuracy_this_level * 100:.1f}%\n")
         if best_accuracy_this_level > best_acc:
             best_acc = best_accuracy_this_level
             best_subset = feature_subset.copy()
 
     print("\n\nFinished search!!")
-    print(f"The best feature subset is {best_subset}, which has an accuracy of {best_acc:.4f}")
+    print(f"\n\nThe best feature subset is {best_subset}, which has an accuracy of {best_acc * 100:.1f}%")
     pass
 
 
 def backward_elimination(data):
-    print("\nBeginning Backward Elimination search.\n")
+    print("\n==============================================\n\nBeginning Backward Elimination search.\n")
 
-    # TODO:
-    # 1. Start with all features
-    # 2. Iteratively remove features
-    # 3. Evaluate accuracy with nearest neighbor
-    # 4. Track best feature subset
+    # find the baseline accuracy using all features
+    # note backward elimination starts with all features and removes one at a time, so feature_subset starts with all features
+    feature_subset = list(range(1, data.shape[1]))
+    baseline_acc = calc_accuracy(data, feature_subset)
+    
+    # the best accuracy and best subset are the baseline and the copy of the feature subset
+    # they will be updated as we go through the levels
+    best_acc = baseline_acc
+    best_subset = feature_subset.copy()
+    
+    print(f"Running nearest neighbor with all {data.shape[1]-1} features, using “leaving-one-out” evaluation, the baseline accuracy is {baseline_acc * 100:.2f}%\n\n")
+    # for loop starts at data's column 1 bc column 0 is class label
+    # unlike forward selection, backward elimination will stop when there's only 1 feature left, so the range is from 1 to data.shape[1]-1
+    for level in range(1, data.shape[1] - 1):
+        best_accuracy_this_level = 0
+        best_feature_to_remove = None
+        curr_set = feature_subset.copy()
+        for feature in curr_set:
+            test_set = curr_set.copy()
+            test_set.remove(feature)
+            temp_acc = calc_accuracy(data, test_set)
+            print(f"    Using feature {test_set} accuracy is {temp_acc * 100:.1f}%")
+
+            if temp_acc >= best_accuracy_this_level:
+                best_feature_to_remove = feature
+                best_accuracy_this_level = temp_acc
+                
+        
+        feature_subset.remove(best_feature_to_remove)
+        print(f"Feature set {feature_subset} was best, accuracy is {best_accuracy_this_level * 100:.1f}%\n")
+        if best_accuracy_this_level >= best_acc:
+            best_acc = best_accuracy_this_level
+            best_subset = feature_subset.copy()
+
+    print("\n\nFinished search!!")
+    print(f"\n\nThe best feature subset is {best_subset}, which has an accuracy of {best_acc * 100:.1f}%")
 
     pass
 
@@ -90,20 +122,17 @@ def calc_accuracy(data, feature_subset):
 
 def main():
     print("\n==============================================\nWelcome to Lydia's Feature Selection Algorithm.\n")
-    dataset_size = input("Do you want to use the 1) SMALL or 2) LARGE dataset 3) Sanity Check?  (please type 1 or 2 or 3):\n\n")
+    dataset_size = input("Type your option: 1) SMALL dataset or 2) LARGE dataset 3) Extra Credit?:\n\n")
     if dataset_size == "1":
         folder_path = "./Small_data/"
         prefix = "CS170_Small_DataSet__"
     elif dataset_size == "2":
         folder_path = "./Large_data/"
         prefix = "CS170_Large_DataSet__"
-    elif dataset_size == "3":
-        folder_path = "./SanityCheck/"
-        prefix = "SanityCheck_DataSet__"
     else:
         print("Invalid option. Exiting program.")
         return
-        
+    
     # Ask user for filename
     dataset_number = input("\nPlease enter the dataset number: \n(My assigned testing datasets are SMALL 116 && LARGE 76)\n\n").strip()    
     filename = f"{prefix}{dataset_number}.txt"
