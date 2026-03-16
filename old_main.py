@@ -113,8 +113,7 @@ def calc_accuracy(data, feature_subset):
                 # I improved the distance calculation from using sqrt() to just summing the squared differences, 
                 # which is sufficient because the ordering stays the same for nearest neighbor.
                 # This should decerase the runtime of the algorithm significantly, especially for large datasets.
-                diff = data[instance, feature_subset] - data[k, feature_subset]
-                dist = np.sum(diff ** 2)
+                dist = np.sqrt(np.sum((data[instance] - data[k]) ** 2))
                 if dist < nearest_dist:
                     nearest_dist = dist
                     nearest_label = data[k,0]
