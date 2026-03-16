@@ -6,11 +6,8 @@ def forward_selection(data):
     print("\n==============================================\n\nBeginning Forward Selection search.\n")
 
     # find which class is the majority in the data
-    counts = np.unique(data[:,0], return_counts=True)
-    majority_count = counts.max()
-    baseline_acc = majority_count / len(data[:,0])
-
     feature_subset = []
+    baseline_acc = calc_accuracy(data, feature_subset)
     best_acc = baseline_acc
     best_subset = []
     print(f"Running nearest neighbor with all {data.shape[1]-1} features, using “leaving-one-out” evaluation, the baseline accuracy is {baseline_acc * 100:.2f}%\n\n")
@@ -58,7 +55,7 @@ def backward_elimination(data):
     print(f"Running nearest neighbor with all {data.shape[1]-1} features, using “leaving-one-out” evaluation, the baseline accuracy is {baseline_acc * 100:.2f}%\n\n")
     # for loop starts at data's column 1 bc column 0 is class label
     # unlike forward selection, backward elimination will stop when there's only 1 feature left, so the range is from 1 to data.shape[1]-1
-    for level in range(1, data.shape[1] - 1):
+    for level in range(1, data.shape[1]):
         best_accuracy_this_level = 0
         best_feature_to_remove = None
         curr_set = feature_subset.copy()
@@ -84,37 +81,36 @@ def backward_elimination(data):
 
     pass
 
-
 def calc_accuracy(data, feature_subset):
+
+    # CASE: empty subset → baseline accuracy
+    if len(feature_subset) == 0:
+        labels = data[:,0]
+        counts = np.unique(labels, return_counts=True)[1]
+        majority = counts.max()
+        return majority / len(labels)
+
     # Evaluate accuracy using nearest neighbor with leave-one-out validation.
-    
-    # 1. create a copy of data to only contain the features/columns from the feature_subset
     data_copy = data[:, feature_subset]
     correct = 0
-    # 2. iterate thru all the instances
-    for instance in range(data_copy.shape[0]):
-        nearest_dist = 999999999999999
-        nearest_label = None
-        # 3. for each instance, grab the instance's label
-        ins_label = data[instance, 0]   # first column is class label
 
-        # 4. perform nearest neighbor to the rest of the instances
+    for instance in range(data_copy.shape[0]):
+        nearest_dist = float("inf")
+        nearest_label = None
+        ins_label = data[instance, 0]
+
         for k in range(data_copy.shape[0]):
-            if k != instance: # (k \= i) to skip the instance itself
-                # calculate distance from instance to rest of the instances, k
+            if k != instance:
                 dist = np.sqrt(np.sum((data_copy[instance] - data_copy[k]) ** 2))
-                # 5. keep track of the nearest neighbor and its label
+
                 if dist < nearest_dist:
                     nearest_dist = dist
-                    nearest_label = data[k, 0]   # first column is class label
+                    nearest_label = data[k,0]
 
-        # 6. compare the nearest neighbor label to the actual label
         if nearest_label == ins_label:
             correct += 1
-   
-    # 7. accuracy = correct / total instances
-    accuracy = correct / data_copy.shape[0]
-    return (correct / data_copy.shape[0])
+
+    return correct / data_copy.shape[0]
 
 
 # 116 76
@@ -122,13 +118,16 @@ def calc_accuracy(data, feature_subset):
 
 def main():
     print("\n==============================================\nWelcome to Lydia's Feature Selection Algorithm.\n")
-    dataset_size = input("Type your option: 1) SMALL dataset or 2) LARGE dataset 3) Extra Credit?:\n\n")
+    dataset_size = input("Type your option: \n1) SMALL dataset \n2) LARGE dataset:\n\n")
     if dataset_size == "1":
         folder_path = "./Small_data/"
         prefix = "CS170_Small_DataSet__"
     elif dataset_size == "2":
         folder_path = "./Large_data/"
         prefix = "CS170_Large_DataSet__"
+    elif dataset_size == "3":
+        folder_path = "./SanityCheck/"
+        prefix = "SanityCheck_DataSet__"
     else:
         print("Invalid option. Exiting program.")
         return
