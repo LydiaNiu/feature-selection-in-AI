@@ -14,7 +14,7 @@ def forward_selection(data):
     # for loop starts at 1 bc column 0 is class label
     for level in range(1, data.shape[1]):
         best_feature_this_level = None
-        best_accuracy_this_level = 0
+        best_accuracy_this_level = -1 # initialize to -1 to make sure any accuracy will be better than it
 
         for feature in range(1, data.shape[1]):
             if feature not in feature_subset:    
@@ -23,7 +23,7 @@ def forward_selection(data):
                 temp_acc = calc_accuracy(data, curr_set)
                 print(f"    Using feature {curr_set} accuracy is {temp_acc * 100:.1f}%")
 
-                if temp_acc >= best_accuracy_this_level:
+                if temp_acc > best_accuracy_this_level:
                     best_feature_this_level = feature
                     best_accuracy_this_level = temp_acc
                 
