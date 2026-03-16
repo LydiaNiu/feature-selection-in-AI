@@ -1,0 +1,267 @@
+(base) user@MEOWW feature-selection-in-AI % python extra_credit.py
+
+==============================================
+Welcome to Lydia's Feature Selection Algorithm.
+
+Which wine dataset would you like to use?
+1) Red Wine
+2) White Wine
+
+Enter your choice: 1
+
+Dataset loaded: Red Wine Quality Dataset
+
+This dataset has 11 features (not including the class attribute), with 1599 instances.
+
+Which algorithm would you like to run?
+1) Forward Selection
+2) Backward Elimination
+
+Enter your choice: 1
+
+==============================================
+
+Beginning Forward Selection search.
+
+Running nearest neighbor with all 11 features, using “leaving-one-out” evaluation, the baseline accuracy is 42.59%
+
+
+    Using feature [1] accuracy is 41.2%
+    Using feature [2] accuracy is 41.2%
+    Using feature [3] accuracy is 38.2%
+    Using feature [4] accuracy is 35.6%
+    Using feature [5] accuracy is 39.2%
+    Using feature [6] accuracy is 37.0%
+    Using feature [7] accuracy is 41.0%
+    Using feature [8] accuracy is 44.8%
+    Using feature [9] accuracy is 37.2%
+    Using feature [10] accuracy is 35.5%
+    Using feature [11] accuracy is 41.9%
+Feature set [8] was best, accuracy is 44.8%
+
+    Using feature [8, 1] accuracy is 55.5%
+    Using feature [8, 2] accuracy is 55.7%
+    Using feature [8, 3] accuracy is 57.2%
+    Using feature [8, 4] accuracy is 53.7%
+    Using feature [8, 5] accuracy is 54.7%
+    Using feature [8, 6] accuracy is 56.8%
+    Using feature [8, 7] accuracy is 55.4%
+    Using feature [8, 9] accuracy is 56.2%
+    Using feature [8, 10] accuracy is 59.0%
+    Using feature [8, 11] accuracy is 60.3%
+Feature set [8, 11] was best, accuracy is 60.3%
+
+    Using feature [8, 11, 1] accuracy is 61.2%
+    Using feature [8, 11, 2] accuracy is 63.0%
+    Using feature [8, 11, 3] accuracy is 62.3%
+    Using feature [8, 11, 4] accuracy is 61.7%
+    Using feature [8, 11, 5] accuracy is 62.5%
+    Using feature [8, 11, 6] accuracy is 62.9%
+    Using feature [8, 11, 7] accuracy is 61.4%
+    Using feature [8, 11, 9] accuracy is 59.3%
+    Using feature [8, 11, 10] accuracy is 60.7%
+Feature set [8, 11, 2] was best, accuracy is 63.0%
+
+    Using feature [8, 11, 2, 1] accuracy is 65.4%
+    Using feature [8, 11, 2, 3] accuracy is 64.0%
+    Using feature [8, 11, 2, 4] accuracy is 64.6%
+    Using feature [8, 11, 2, 5] accuracy is 63.0%
+    Using feature [8, 11, 2, 6] accuracy is 62.3%
+    Using feature [8, 11, 2, 7] accuracy is 63.3%
+    Using feature [8, 11, 2, 9] accuracy is 64.4%
+    Using feature [8, 11, 2, 10] accuracy is 64.9%
+Feature set [8, 11, 2, 1] was best, accuracy is 65.4%
+
+    Using feature [8, 11, 2, 1, 3] accuracy is 64.2%
+    Using feature [8, 11, 2, 1, 4] accuracy is 64.7%
+    Using feature [8, 11, 2, 1, 5] accuracy is 65.0%
+    Using feature [8, 11, 2, 1, 6] accuracy is 64.7%
+    Using feature [8, 11, 2, 1, 7] accuracy is 61.8%
+    Using feature [8, 11, 2, 1, 9] accuracy is 65.0%
+    Using feature [8, 11, 2, 1, 10] accuracy is 64.5%
+Feature set [8, 11, 2, 1, 5] was best, accuracy is 65.0%
+
+    Using feature [8, 11, 2, 1, 5, 3] accuracy is 64.5%
+    Using feature [8, 11, 2, 1, 5, 4] accuracy is 64.7%
+    Using feature [8, 11, 2, 1, 5, 6] accuracy is 64.7%
+    Using feature [8, 11, 2, 1, 5, 7] accuracy is 61.6%
+    Using feature [8, 11, 2, 1, 5, 9] accuracy is 65.0%
+    Using feature [8, 11, 2, 1, 5, 10] accuracy is 64.7%
+Feature set [8, 11, 2, 1, 5, 9] was best, accuracy is 65.0%
+
+    Using feature [8, 11, 2, 1, 5, 9, 3] accuracy is 65.2%
+    Using feature [8, 11, 2, 1, 5, 9, 4] accuracy is 64.1%
+    Using feature [8, 11, 2, 1, 5, 9, 6] accuracy is 64.8%
+    Using feature [8, 11, 2, 1, 5, 9, 7] accuracy is 61.5%
+    Using feature [8, 11, 2, 1, 5, 9, 10] accuracy is 65.9%
+Feature set [8, 11, 2, 1, 5, 9, 10] was best, accuracy is 65.9%
+
+    Using feature [8, 11, 2, 1, 5, 9, 10, 3] accuracy is 65.7%
+    Using feature [8, 11, 2, 1, 5, 9, 10, 4] accuracy is 64.4%
+    Using feature [8, 11, 2, 1, 5, 9, 10, 6] accuracy is 64.1%
+    Using feature [8, 11, 2, 1, 5, 9, 10, 7] accuracy is 61.4%
+Feature set [8, 11, 2, 1, 5, 9, 10, 3] was best, accuracy is 65.7%
+
+    Using feature [8, 11, 2, 1, 5, 9, 10, 3, 4] accuracy is 64.9%
+    Using feature [8, 11, 2, 1, 5, 9, 10, 3, 6] accuracy is 63.5%
+    Using feature [8, 11, 2, 1, 5, 9, 10, 3, 7] accuracy is 61.6%
+Feature set [8, 11, 2, 1, 5, 9, 10, 3, 4] was best, accuracy is 64.9%
+
+    Using feature [8, 11, 2, 1, 5, 9, 10, 3, 4, 6] accuracy is 65.0%
+    Using feature [8, 11, 2, 1, 5, 9, 10, 3, 4, 7] accuracy is 61.0%
+Feature set [8, 11, 2, 1, 5, 9, 10, 3, 4, 6] was best, accuracy is 65.0%
+
+    Using feature [8, 11, 2, 1, 5, 9, 10, 3, 4, 6, 7] accuracy is 61.5%
+Feature set [8, 11, 2, 1, 5, 9, 10, 3, 4, 6, 7] was best, accuracy is 61.5%
+
+
+
+Finished search!!
+
+
+The best feature subset is [8, 11, 2, 1, 5, 9, 10], which has an accuracy of 65.9%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(base) user@MEOWW feature-selection-in-AI % python extra_credit.py
+
+==============================================
+Welcome to Lydia's Feature Selection Algorithm.
+
+Which wine dataset would you like to use?
+1) Red Wine
+2) White Wine
+
+Enter your choice: 1
+
+Dataset loaded: Red Wine Quality Dataset
+
+This dataset has 11 features (not including the class attribute), with 1599 instances.
+
+Which algorithm would you like to run?
+1) Forward Selection
+2) Backward Elimination
+
+Enter your choice: 2
+
+==============================================
+
+Beginning Backward Elimination search.
+
+Running nearest neighbor with all 11 features, using “leaving-one-out” evaluation, the baseline accuracy is 61.54%
+
+
+    Using feature [2, 3, 4, 5, 6, 7, 8, 9, 10, 11] accuracy is 61.1%
+    Using feature [1, 3, 4, 5, 6, 7, 8, 9, 10, 11] accuracy is 61.5%
+    Using feature [1, 2, 4, 5, 6, 7, 8, 9, 10, 11] accuracy is 61.5%
+    Using feature [1, 2, 3, 5, 6, 7, 8, 9, 10, 11] accuracy is 60.8%
+    Using feature [1, 2, 3, 4, 6, 7, 8, 9, 10, 11] accuracy is 61.5%
+    Using feature [1, 2, 3, 4, 5, 7, 8, 9, 10, 11] accuracy is 61.0%
+    Using feature [1, 2, 3, 4, 5, 6, 8, 9, 10, 11] accuracy is 65.0%
+    Using feature [1, 2, 3, 4, 5, 6, 7, 9, 10, 11] accuracy is 61.5%
+    Using feature [1, 2, 3, 4, 5, 6, 7, 8, 10, 11] accuracy is 61.5%
+    Using feature [1, 2, 3, 4, 5, 6, 7, 8, 9, 11] accuracy is 61.4%
+    Using feature [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] accuracy is 59.7%
+Feature set [1, 2, 3, 4, 5, 6, 8, 9, 10, 11] was best, accuracy is 65.0%
+
+    Using feature [2, 3, 4, 5, 6, 8, 9, 10, 11] accuracy is 63.1%
+    Using feature [1, 3, 4, 5, 6, 8, 9, 10, 11] accuracy is 64.4%
+    Using feature [1, 2, 4, 5, 6, 8, 9, 10, 11] accuracy is 64.9%
+    Using feature [1, 2, 3, 5, 6, 8, 9, 10, 11] accuracy is 63.5%
+    Using feature [1, 2, 3, 4, 6, 8, 9, 10, 11] accuracy is 64.9%
+    Using feature [1, 2, 3, 4, 5, 8, 9, 10, 11] accuracy is 64.9%
+    Using feature [1, 2, 3, 4, 5, 6, 9, 10, 11] accuracy is 65.0%
+    Using feature [1, 2, 3, 4, 5, 6, 8, 10, 11] accuracy is 65.0%
+    Using feature [1, 2, 3, 4, 5, 6, 8, 9, 11] accuracy is 65.0%
+    Using feature [1, 2, 3, 4, 5, 6, 8, 9, 10] accuracy is 61.1%
+Feature set [1, 2, 3, 4, 5, 6, 8, 10, 11] was best, accuracy is 65.0%
+
+    Using feature [2, 3, 4, 5, 6, 8, 10, 11] accuracy is 63.0%
+    Using feature [1, 3, 4, 5, 6, 8, 10, 11] accuracy is 64.6%
+    Using feature [1, 2, 4, 5, 6, 8, 10, 11] accuracy is 64.7%
+    Using feature [1, 2, 3, 5, 6, 8, 10, 11] accuracy is 63.5%
+    Using feature [1, 2, 3, 4, 6, 8, 10, 11] accuracy is 65.0%
+    Using feature [1, 2, 3, 4, 5, 8, 10, 11] accuracy is 64.7%
+    Using feature [1, 2, 3, 4, 5, 6, 10, 11] accuracy is 65.0%
+    Using feature [1, 2, 3, 4, 5, 6, 8, 11] accuracy is 64.7%
+    Using feature [1, 2, 3, 4, 5, 6, 8, 10] accuracy is 60.9%
+Feature set [1, 2, 3, 4, 6, 8, 10, 11] was best, accuracy is 65.0%
+
+    Using feature [2, 3, 4, 6, 8, 10, 11] accuracy is 63.0%
+    Using feature [1, 3, 4, 6, 8, 10, 11] accuracy is 64.6%
+    Using feature [1, 2, 4, 6, 8, 10, 11] accuracy is 64.8%
+    Using feature [1, 2, 3, 6, 8, 10, 11] accuracy is 63.7%
+    Using feature [1, 2, 3, 4, 8, 10, 11] accuracy is 64.7%
+    Using feature [1, 2, 3, 4, 6, 10, 11] accuracy is 65.0%
+    Using feature [1, 2, 3, 4, 6, 8, 11] accuracy is 64.6%
+    Using feature [1, 2, 3, 4, 6, 8, 10] accuracy is 61.0%
+Feature set [1, 2, 3, 4, 6, 10, 11] was best, accuracy is 65.0%
+
+    Using feature [2, 3, 4, 6, 10, 11] accuracy is 63.0%
+    Using feature [1, 3, 4, 6, 10, 11] accuracy is 64.6%
+    Using feature [1, 2, 4, 6, 10, 11] accuracy is 64.8%
+    Using feature [1, 2, 3, 6, 10, 11] accuracy is 63.7%
+    Using feature [1, 2, 3, 4, 10, 11] accuracy is 64.7%
+    Using feature [1, 2, 3, 4, 6, 11] accuracy is 64.6%
+    Using feature [1, 2, 3, 4, 6, 10] accuracy is 61.0%
+Feature set [1, 2, 4, 6, 10, 11] was best, accuracy is 64.8%
+
+    Using feature [2, 4, 6, 10, 11] accuracy is 62.7%
+    Using feature [1, 4, 6, 10, 11] accuracy is 64.7%
+    Using feature [1, 2, 6, 10, 11] accuracy is 64.4%
+    Using feature [1, 2, 4, 10, 11] accuracy is 64.8%
+    Using feature [1, 2, 4, 6, 11] accuracy is 64.7%
+    Using feature [1, 2, 4, 6, 10] accuracy is 61.1%
+Feature set [1, 2, 4, 10, 11] was best, accuracy is 64.8%
+
+    Using feature [2, 4, 10, 11] accuracy is 64.7%
+    Using feature [1, 4, 10, 11] accuracy is 64.4%
+    Using feature [1, 2, 10, 11] accuracy is 64.5%
+    Using feature [1, 2, 4, 11] accuracy is 64.8%
+    Using feature [1, 2, 4, 10] accuracy is 61.8%
+Feature set [1, 2, 4, 11] was best, accuracy is 64.8%
+
+    Using feature [2, 4, 11] accuracy is 64.2%
+    Using feature [1, 4, 11] accuracy is 63.4%
+    Using feature [1, 2, 11] accuracy is 65.5%
+    Using feature [1, 2, 4] accuracy is 57.7%
+Feature set [1, 2, 11] was best, accuracy is 65.5%
+
+    Using feature [2, 11] accuracy is 57.6%
+    Using feature [1, 11] accuracy is 56.3%
+    Using feature [1, 2] accuracy is 55.3%
+Feature set [2, 11] was best, accuracy is 57.6%
+
+    Using feature [11] accuracy is 41.9%
+    Using feature [2] accuracy is 41.2%
+Feature set [11] was best, accuracy is 41.9%
+
+    Using feature [] accuracy is 42.6%
+Feature set [] was best, accuracy is 42.6%
+
+
+
+Finished search!!
+
+
+The best feature subset is [1, 2, 11], which has an accuracy of 65.5%
+(base) user@MEOWW feature-selection-in-AI % 
