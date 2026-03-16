@@ -139,44 +139,91 @@ def calc_accuracy(data, feature_subset):
 
 # 116 76
 # 96-98%
-
 def main():
-    print("\n==============================================\nWelcome to Lydia's Feature Selection Algorithm.\n")
-    dataset_size = input("Type your option: \n1) SMALL dataset \n2) LARGE dataset:\n\n")
+    print("\n==============================================")
+    print("Welcome to Lydia's Feature Selection Algorithm.\n")
+
+    dataset_size = input(
+        "Type your option:\n"
+        "1) SMALL dataset\n"
+        "2) LARGE dataset\n"
+        "3) Sanity Check dataset\n"
+        "4) Breast Cancer WDBC dataset\n\n"
+    )
+
     if dataset_size == "1":
         folder_path = "./Small_data/"
         prefix = "CS170_Small_DataSet__"
+
+        dataset_number = input(
+            "\nPlease enter the dataset number:\n"
+            "(My assigned testing dataset is SMALL 116)\n\n"
+        ).strip()
+
+        filename = f"{prefix}{dataset_number}.txt"
+        file_path = os.path.join(folder_path, filename)
+
+        data = np.loadtxt(file_path)
+
     elif dataset_size == "2":
         folder_path = "./Large_data/"
         prefix = "CS170_Large_DataSet__"
+
+        dataset_number = input(
+            "\nPlease enter the dataset number:\n"
+            "(My assigned testing dataset is LARGE 76)\n\n"
+        ).strip()
+
+        filename = f"{prefix}{dataset_number}.txt"
+        file_path = os.path.join(folder_path, filename)
+
+        data = np.loadtxt(file_path)
+
     elif dataset_size == "3":
         folder_path = "./SanityCheck/"
         prefix = "SanityCheck_DataSet__"
+
+        dataset_number = input("\nEnter sanity check dataset number:\n").strip()
+
+        filename = f"{prefix}{dataset_number}.txt"
+        file_path = os.path.join(folder_path, filename)
+
+        data = np.loadtxt(file_path)
+
+    elif dataset_size == "4":
+
+        file_path = "./wdbc.data"
+
+        if not os.path.exists(file_path):
+            print("wdbc.data file not found.")
+            return
+
+        # Load raw data
+        raw = np.genfromtxt(file_path, delimiter=",", dtype=str)
+
+        # Convert labels: M=1 (malignant), B=0 (benign)
+        labels = np.where(raw[:,1] == "M", 1, 0).astype(float)
+
+        # Extract features (skip ID and diagnosis column)
+        features = raw[:,2:].astype(float)
+
+        # Combine into algorithm format: label first column
+        data = np.column_stack((labels, features))
+
+        filename = "wdbc.data"
+
     else:
         print("Invalid option. Exiting program.")
         return
-    
-    # Ask user for filename
-    dataset_number = input("\nPlease enter the dataset number: \n(My assigned testing datasets are SMALL 116 && LARGE 76)\n\n").strip()    
-    filename = f"{prefix}{dataset_number}.txt"
-    file_path = os.path.join(folder_path, filename)
 
-
-    if not os.path.exists(file_path):
-        print("File not found. Please check the file name and try again.")
-        return
-
-    # Load dataset
-    data = np.loadtxt(file_path)
 
     num_instances = data.shape[0]
-    num_features = data.shape[1] - 1   # first column is class label
+    num_features = data.shape[1] - 1
 
     print(f"\nGreat choice! We will be working on {filename}")
     print(f"\nThis dataset has {num_features} features (not including the class attribute), with {num_instances} instances.\n")
 
-    # Ask user which algorithm
-    print("Which algorithm would you like to run? (Please type 1 or 2)")
+    print("Which algorithm would you like to run?")
     print("1) Forward Selection")
     print("2) Backward Elimination")
 
@@ -188,8 +235,6 @@ def main():
         backward_elimination(data)
     else:
         print("Invalid choice. Exiting.")
-
-
 
 
 if __name__ == "__main__":
