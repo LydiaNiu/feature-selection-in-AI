@@ -1,0 +1,11 @@
+1. Results of the 2 search algo in the Large dataset: 
+    Forward: The best feature subset is [59, 38], which has an accuracy of 97.2%
+    Backward: The best feature subset is [59], which has an accuracy of 84.5%
+
+2. Results of the 2 search algo in the extra credit assignment
+    Forward: The best feature subset is [8, 11, 2, 1, 5, 9, 10], which has an accuracy of 65.9%
+    Backward: The best feature subset is [1, 2, 11], which has an accuracy of 65.5%
+
+
+    feature was not included in the calssifier 
+    the first feature is the xx and this is the reasoanble 
