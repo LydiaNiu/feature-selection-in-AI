@@ -65,14 +65,14 @@ def backward_elimination(data):
             temp_acc = calc_accuracy(data, test_set)
             print(f"    Using feature {test_set} accuracy is {temp_acc * 100:.1f}%")
 
-            if temp_acc >= best_accuracy_this_level:
+            if temp_acc > best_accuracy_this_level:
                 best_feature_to_remove = feature
                 best_accuracy_this_level = temp_acc
                 
         
         feature_subset.remove(best_feature_to_remove)
         print(f"Feature set {feature_subset} was best, accuracy is {best_accuracy_this_level * 100:.1f}%\n")
-        if best_accuracy_this_level >= best_acc:
+        if best_accuracy_this_level > best_acc:
             best_acc = best_accuracy_this_level
             best_subset = feature_subset.copy()
 
@@ -91,38 +91,80 @@ If the predicted label matches the actual label, we increment the correct count.
 """
 def calc_accuracy(data, feature_subset):
 
-    # case 1:If feature subset is empty, return baseline accuracy
     if len(feature_subset) == 0:
         labels = data[:,0]
         counts = np.unique(labels, return_counts=True)[1]
-        majority = counts.max()
-        return majority / len(labels)
+        return counts.max() / len(labels)
 
-    # Evaluate accuracy using nearest neighbor with leave-one-out validation.
+    features = data[:, feature_subset]
     correct = 0
+    n = data.shape[0]
 
-    # case 2: calculate the distance from each instance to the rest instances (k)
-    for instance in range(data.shape[0]):
-        nearest_dist = float("inf")
-        nearest_label = None
-        ins_label = data[instance, 0]
+    # Here, i is the level of the algorithm. Each level will find the best feature to remove from 
+    # the current feature subset. 
+    # The algorithm will continue until there are no more features left in the subset.
+    for i in range(n):
+        
+        # In stead of looping through to calculate the distance between the i-th instance and the rest of the instances, 
+        # we can use vectorized operations to calculate the distances more efficiently.
+        # I consult that this method is advised from AI tool to optimize the runtime, but all the codes are written by me.
+        # The original codes are commented out below for reference.
+        diff = features - features[i] 
+        dists = np.sum(diff**2, axis=1) # the usage of sum() instead of sqrt() is sufficient because the ordering stays the same for nearest neighbor.
 
-        for k in range(data.shape[0]):
-            if k != instance:
-                # Calculate the distance between the instance and the k-th instance
-                # I improved the distance calculation from using sqrt() to just summing the squared differences, 
-                # which is sufficient because the ordering stays the same for nearest neighbor.
-                # This should decerase the runtime of the algorithm significantly, especially for large datasets.
-                diff = data[instance, feature_subset] - data[k, feature_subset]
-                dist = np.sum(diff ** 2)
-                if dist < nearest_dist:
-                    nearest_dist = dist
-                    nearest_label = data[k,0]
+        dists[i] = float("inf")
 
-        if nearest_label == ins_label:
+        nearest_index = np.argmin(dists)
+
+        # ========original version============
+        # nearest_dist = float("inf")
+        # nearest_label = None
+        # ins_label = data[instance, 0]
+
+        # for k in range(data.shape[0]):
+        #     if k != instance:
+        #         diff = data[instance, feature_subset] - data[k, feature_subset]
+        #         dist = np.sum(diff ** 2)
+        #         if dist < nearest_dist:
+        #             nearest_dist = dist
+        #             nearest_label = data[k,0]
+        
+        if data[nearest_index,0] == data[i,0]:
             correct += 1
+        
+    return correct / n
 
-    return correct / data.shape[0]
+
+# def calc_accuracy(data, feature_subset, sample_size=100):
+
+#     n = data.shape[0]
+
+#     # random subsample for speed
+#     if n > sample_size:
+#         idx = np.random.choice(n, sample_size, replace=False)
+#         data = data[idx]
+#         n = sample_size
+
+#     if len(feature_subset) == 0:
+#         labels = data[:,0]
+#         counts = np.unique(labels, return_counts=True)[1]
+#         return counts.max() / n
+
+#     features = data[:, feature_subset]
+#     correct = 0
+
+#     for i in range(n):
+
+#         diff = features - features[i]
+#         dists = np.sum(diff**2, axis=1)
+
+#         dists[i] = float("inf")
+#         nearest_index = np.argmin(dists)
+
+#         if data[nearest_index,0] == data[i,0]:
+#             correct += 1
+
+#     return correct / n
 
 
 # 116 76
