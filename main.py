@@ -160,7 +160,7 @@ def calc_accuracy(data, feature_subset):
 
 def main():
     print("\n==============================================\nWelcome to Lydia's Feature Selection Algorithm.\n")
-    dataset_size = input("Type your option: \n1) SMALL dataset \n2) LARGE dataset:\n\n")
+    dataset_size = input("Type your option: 1) SMALL dataset 2) LARGE dataset: ")
     if dataset_size == "1":
         folder_path = "./Small_data/"
         prefix = "CS170_Small_DataSet__"
@@ -175,7 +175,7 @@ def main():
         return
     
     # Ask user for filename
-    dataset_number = input("\nPlease enter the dataset number: \n(My assigned testing datasets are SMALL 116 && LARGE 76)\n\n").strip()    
+    dataset_number = input("\nPlease enter the dataset number (My assigned testing datasets are SMALL 116 && LARGE 76): ").strip()    
     filename = f"{prefix}{dataset_number}.txt"
     file_path = os.path.join(folder_path, filename)
 
@@ -189,8 +189,6 @@ def main():
 
     num_instances = data.shape[0]
     num_features = data.shape[1] - 1   # first column is class label
-
-    print(f"\nGreat choice! We will be working on {filename}")
     print(f"\nThis dataset has {num_features} features (not including the class attribute), with {num_instances} instances.\n")
 
     # Ask user which algorithm
